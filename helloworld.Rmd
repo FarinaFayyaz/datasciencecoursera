@@ -1,8 +1,0 @@
----
-title: "HelloWorld.md"
-author: "me"
-date: "2023-08-30"
-output: html_document
----
-
-## This is a Markdown file.
