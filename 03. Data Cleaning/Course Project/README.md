@@ -1,6 +1,6 @@
 # Getting and Cleaning Data Project
 Author: Farina Fayyaz
-Data Zip File Location: [UC Irvine Repo](https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip)
+Data Zip File Location: [UC Irvine Repo] (https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip)
 
 # Goal of the Project
 1. A tidy data set
@@ -28,7 +28,22 @@ Data Zip File Location: [UC Irvine Repo](https://d396qusza40orc.cloudfront.net/g
 These are the steps followed in the run_analysis.r script
 
 1. Load the dependence (tidyverse)
-'''
-    library(tidyverse)
-'''
+```
+library(tidyverse)
+```
+2. Retrieve and extract the data. Verify the existence of the data directory; if absent, create it. Download the file and unzip it to "Data" directory. "Data/UCI HAR Dataset" will contain the requisite files.
+```
+path <- getwd()
+#Creating Data subdirectory
+if (!dir.exists("Data")) {
+    dir.create("Data")
+}
 
+#Downloading Dataset
+download.file("https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip","path/Data/test.zip")
+unzip("Data/test.zip",exdir="Data")
+```
+3. Read the features.txt file, that contains the names of the variables and store them in a character vector
+```
+features <- fread("./Data/UCI HAR Dataset/features.txt", col.names = c("index", "featureNames"))
+```
