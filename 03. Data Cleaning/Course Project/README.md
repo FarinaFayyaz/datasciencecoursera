@@ -13,9 +13,9 @@ Data Zip File Location: [UC Irvine Repo](https://d396qusza40orc.cloudfront.net/g
 | Goal | Item | Link to Item |
 |---|---|---|
 | The run_analysis.R script that performs all the analysis| run_analysis.R | [R Script Link](https://github.com/FarinaFayyaz/datasciencecoursera/blob/main/03.%20Data%20Cleaning/run_analysis.r) |
-| Tidy Dataset  | Clean Dataset | [Dataset Link](insert link here) |
+| Tidy Dataset Summary  | Clean Dataset | [Dataset Link](https://github.com/FarinaFayyaz/datasciencecoursera/blob/main/03.%20Data%20Cleaning/Course%20Project/tidy_data_summary.txt) |
 | Github Repository | Repository | [Repository Link](https://github.com/FarinaFayyaz/datasciencecoursera/tree/main/03.%20Data%20Cleaning) |
-| The CodeBook.md with description of all the variables in the final tidy data set | Codebook.md | [Codebook Link](insert link here) |
+| The CodeBook.md with description of all the variables in the final tidy data set | Codebook.md | [Codebook Link](https://github.com/FarinaFayyaz/datasciencecoursera/blob/main/03.%20Data%20Cleaning/Course%20Project/Codebook.md) |
 | This README.md with all the instructions to run and explanations | README.md | [File Link](http://localhost:8888/edit/Course%20Project%2FREADME.md) |
 
 ## To Perform the run_analysis.R file
