@@ -52,7 +52,7 @@ plot_and_save_histogram(powerDT, "plot1.png")
 
 ```
 
-![](insert link here)
+![](https://github.com/FarinaFayyaz/datasciencecoursera/blob/main/04.%20EDA/Course%20Project%201/plot1.png)
 
 ```R
 library("data.table")
@@ -85,7 +85,7 @@ dev.off()
 
 ```
 
-![](insert link here)
+![](https://github.com/FarinaFayyaz/datasciencecoursera/blob/main/04.%20EDA/Course%20Project%201/plot2.png)
 
 ```R
 library("data.table")
@@ -122,7 +122,7 @@ dev.off()
 
 ```
 
-![](https://github.com/mGalarnyk/datasciencecoursera/blob/master/4_Exploratory_Data_Analysis/project1/plot3.png)
+![](https://github.com/FarinaFayyaz/datasciencecoursera/blob/main/04.%20EDA/Course%20Project%201/plot3.png)
 
 ```R
 library("data.table")
@@ -165,5 +165,5 @@ dev.off()
 
 ```
 
-![](insert link for plot)
+![](https://github.com/FarinaFayyaz/datasciencecoursera/blob/main/04.%20EDA/Course%20Project%201/plot4.png)
 
