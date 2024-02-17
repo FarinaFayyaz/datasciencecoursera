@@ -8,3 +8,5 @@
 *.RData
 *.rdx
 05. Reproducible Research/Course Project 2/Report_cache/latex/__packages
+*.dcf
+05. Reproducible Research/Course Project 2/Report_cache/html/__packages
