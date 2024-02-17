@@ -97,5 +97,73 @@ subsetdf[, CROPDMGEXP := cropDmgKey[as.character(CROPDMGEXP)]]
 # Replace NA values with 10^0
 subsetdf[is.na(PROPDMGEXP), PROPDMGEXP := 10^0]
 subsetdf[is.na(CROPDMGEXP), CROPDMGEXP := 10^0]
-head(subsetdf)
 ```
+
+### 3.6 Adding Columns Representing Economic Cost to the Dataset
+
+```{r}
+subsetdf <- subsetdf[, .(EVTYPE, FATALITIES, INJURIES, PROPDMG, PROPDMGEXP, PropCost = PROPDMG * PROPDMGEXP, CROPDMG, CROPDMGEXP, CropCost = CROPDMG * CROPDMGEXP)]
+```
+### 3.7 Calculating Total Damage
+
+```{r}
+totalCostDT <- subsetdf[, .(PropCost = sum(PropCost), CropCost = sum(CropCost), Total_Cost = sum(PropCost) + sum(CropCost)), by = .(EVTYPE)]
+
+totalCostDT <- totalCostDT[order(-Total_Cost), ]
+
+totalCostDT <- totalCostDT[1:10, ]
+
+head(totalCostDT, 5)
+```
+
+### 3.8 Calculating Total Fatalities and Injuries
+
+```{r}
+totalInjuriesDT <- subsetdf[, .(FATALITIES = sum(FATALITIES), INJURIES = sum(INJURIES), totals = sum(FATALITIES) + sum(INJURIES)), by = .(EVTYPE)]
+
+totalInjuriesDT <- totalInjuriesDT[order(-FATALITIES), ]
+
+totalInjuriesDT <- totalInjuriesDT[1:10, ]
+
+head(totalInjuriesDT, 5)
+```
+
+## 4. Results
+
+### 4.1 Identifying Events most harmful to Population Health
+Before making bar graph, we will melt data.table for easy transformation
+
+```{r}
+bad_stuff <- melt(totalInjuriesDT, id.vars="EVTYPE", variable.name = "bad_thing")
+head(bad_stuff, 5)
+```
+
+### 4.2 Creating the Graph
+
+```{r}
+library(ggplot2)
+# Create a bar chart for top 10 US killers
+healthChart <- ggplot(data = bad_stuff, aes(x = reorder(EVTYPE, -value), y = value, fill = bad_thing)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  
+  # Customize axis labels and appearance
+  ylab("Frequency Count") +
+  xlab("Event Type") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  
+  # Set chart title and center it
+  ggtitle("Most Harmful Population Events") +
+  theme(plot.title = element_text(hjust = 0.5))
+
+# Display the chart
+print(healthChart)
+
+```
+So, Tornado is the most harmful event with a lot of injuries.
+
+### 4.3 Identifying Events with Most Economic Impact
+
+```{r}
+
+```
+
