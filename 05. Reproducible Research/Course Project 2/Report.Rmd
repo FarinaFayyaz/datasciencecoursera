@@ -101,24 +101,31 @@ subsetdf[is.na(CROPDMGEXP), CROPDMGEXP := 10^0]
 
 ### 3.6 Adding Columns Representing Economic Cost to the Dataset
 
-```{r}
-subsetdf <- subsetdf[, .(EVTYPE, FATALITIES, INJURIES, PROPDMG, PROPDMGEXP, PropCost = PROPDMG * PROPDMGEXP, CROPDMG, CROPDMGEXP, CropCost = CROPDMG * CROPDMGEXP)]
+```{r Adding Columns for Economic Cost}
+# Adding Columns Representing Economic Cost to the Dataset
+subsetdf[, PropCost := PROPDMG * PROPDMGEXP]
+subsetdf[, CropCost := CROPDMG * CROPDMGEXP]
+
+# Replace NA values with 0 in economic cost columns
+subsetdf[is.na(PropCost), PropCost := 0]
+subsetdf[is.na(CropCost), CropCost := 0]
+
+# Convert economic cost columns to numeric
+subsetdf[, c("PropCost", "CropCost") := lapply(.SD, as.numeric), .SDcols = c("PropCost", "CropCost")]
+
 ```
 ### 3.7 Calculating Total Damage
 
-```{r}
+```{r Calculating Total Damage}
 totalCostDT <- subsetdf[, .(PropCost = sum(PropCost), CropCost = sum(CropCost), Total_Cost = sum(PropCost) + sum(CropCost)), by = .(EVTYPE)]
-
 totalCostDT <- totalCostDT[order(-Total_Cost), ]
-
 totalCostDT <- totalCostDT[1:10, ]
-
 head(totalCostDT, 5)
 ```
 
 ### 3.8 Calculating Total Fatalities and Injuries
 
-```{r}
+```{r Calculating Total Fatalities}
 totalInjuriesDT <- subsetdf[, .(FATALITIES = sum(FATALITIES), INJURIES = sum(INJURIES), totals = sum(FATALITIES) + sum(INJURIES)), by = .(EVTYPE)]
 
 totalInjuriesDT <- totalInjuriesDT[order(-FATALITIES), ]
@@ -133,37 +140,59 @@ head(totalInjuriesDT, 5)
 ### 4.1 Identifying Events most harmful to Population Health
 Before making bar graph, we will melt data.table for easy transformation
 
-```{r}
+```{r Most Harmful Event}
 bad_stuff <- melt(totalInjuriesDT, id.vars="EVTYPE", variable.name = "bad_thing")
 head(bad_stuff, 5)
 ```
 
-### 4.2 Creating the Graph
+**Creating the Plot**
 
-```{r}
+```{r Graph for Most Harmful Event }
 library(ggplot2)
 # Create a bar chart for top 10 US killers
-healthChart <- ggplot(data = bad_stuff, aes(x = reorder(EVTYPE, -value), y = value, fill = bad_thing)) +
-  geom_bar(stat = "identity", position = "dodge") +
-  
-  # Customize axis labels and appearance
-  ylab("Frequency Count") +
-  xlab("Event Type") +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-  
-  # Set chart title and center it
-  ggtitle("Most Harmful Population Events") +
-  theme(plot.title = element_text(hjust = 0.5))
+healthChart <- ggplot(bad_stuff, aes(x=reorder(EVTYPE, -value), y=value))
 
-# Display the chart
-print(healthChart)
+# Plot data as bar chart
+healthChart = healthChart + geom_bar(stat="identity", aes(fill=bad_thing),position = "dodge")
+# Format y-axis scale and set y-axis label
+healthChart = healthChart + ylab("Frequency Count") 
+# Set x-axis label
+healthChart = healthChart + xlab("Event Type") 
+# Rotate x-axis tick labels 
+healthChart = healthChart + theme(axis.text.x = element_text(angle=45, hjust=1))
+# Set chart title and center it
+healthChart = healthChart + ggtitle("Top 10 US Killers") + theme(plot.title = element_text(hjust = 0.5))
+
+healthChart
 
 ```
 So, Tornado is the most harmful event with a lot of injuries.
 
 ### 4.3 Identifying Events with Most Economic Impact
+Before making bar graph, we will melt data.table for easy transformation
 
-```{r}
+```{r Economically Impactful Events}
+econ_consequences <- melt(totalCostDT, id.vars="EVTYPE", variable.name = "Damage_Type")
+head(econ_consequences, 5)
+```
+
+**Creating the Plot**
+
+```{r Graph for Economically Impactful Events}
+# Create a bar chart for top 10 US storm events causing economic consequencs
+econChart <- ggplot(econ_consequences, aes(x=reorder(EVTYPE, -value), y=value))
+
+# Plot data as bar chart
+econChart = econChart + geom_bar(stat="identity", aes(fill=Damage_Type), position="dodge")
+# Format y-axis scale and set y-axis label
+econChart = econChart + ylab("Cost (dollars)") 
+# Set x-axis label
+econChart = econChart + xlab("Event Type") 
+# Rotate x-axis tick labels 
+econChart = econChart + theme(axis.text.x = element_text(angle=45, hjust=1))
+# Set chart title and center it
+econChart = econChart + ggtitle("Top 10 US Storm Events causing Economic Consequences") + theme(plot.title = element_text(hjust = 0.5))
+econChart
 
 ```
 
