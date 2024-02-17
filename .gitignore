@@ -5,3 +5,7 @@
 05. Reproducible Research/Course Project 2/Report.pdf
 05. Reproducible Research/Course Project 2/Untitled.ipynb
 05. Reproducible Research/Course Project 2/.ipynb_checkpoints/Untitled-checkpoint.ipynb
+*.rdb
+*.RData
+*.rdx
+05. Reproducible Research/Course Project 2/Report_cache/latex/__packages
