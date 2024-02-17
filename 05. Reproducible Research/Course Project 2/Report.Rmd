@@ -7,8 +7,15 @@ output: pdf_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
-	echo = TRUE,
-	cache = TRUE)
+  echo = TRUE,
+  cache = TRUE,
+  tidy = TRUE,
+  tidy.opts = list(
+    width.cutoff = 60,  
+    keep.blank.line = TRUE
+  )
+)
+
 ```
 
 ## 1. Synopsis
