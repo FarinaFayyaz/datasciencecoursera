@@ -2,7 +2,9 @@
 title: "Analysis of the Adverse Health and Economic Impacts of US Storms"
 author: "Farina Fayyaz"
 date: "2024-02-12"
-output: pdf_document
+output:
+  html_document:
+    df_print: paged
 ---
 
 ```{r setup, include=FALSE}
