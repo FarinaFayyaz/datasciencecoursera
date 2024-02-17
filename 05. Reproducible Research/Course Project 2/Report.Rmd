@@ -37,8 +37,8 @@ For more information about Data: [Documentation](https://github.com/FarinaFayyaz
 ```{r Downloading the Data, warning=FALSE, out.width=60}
 if (!dir.exists("Data")) {
   dir.create("Data")
-  download.file(url ="https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2FStormData.csv.bz2", 
-                destfile = "Data/data.csv")
+  url <-"https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2FStormData.csv.bz2"
+  download.file(url, destfile = "Data/data.csv")
 }
 ```
 
@@ -62,7 +62,8 @@ names(df)
 
 ### 3.4 Subsetting the Data
 
-We only need to keep columns "EVTYPE", "INJURIES","FATALITIES","PROPDMG","PROPDMGEXP","CROPDMG" and "CROPDMGEXP" for our analysis. Also, we'll only use data where fatalities and injuries occurred.
+We only need to keep columns "EVTYPE", "INJURIES","FATALITIES","PROPDMG","PROPDMGEXP",
+"CROPDMG" and "CROPDMGEXP" for our analysis. Also, we'll only use data where fatalities and injuries occurred.
 
 ```{r Subsetting the Data}
 # Keep only necessary columns
